@@ -1374,6 +1374,7 @@ static struct riscv_supported_ext riscv_supported_vendor_x_ext[] =
   {"xtheadmempair",	ISA_SPEC_CLASS_DRAFT,	1, 0, 0 },
   {"xtheadsync",	ISA_SPEC_CLASS_DRAFT,	1, 0, 0 },
   {"xventanacondops",	ISA_SPEC_CLASS_DRAFT,	1, 0, 0 },
+  {"xtheadv",    ISA_SPEC_CLASS_DRAFT, 0, 7, 1},
   {NULL, 0, 0, 0, 0}
 };
 
@@ -1994,7 +1995,8 @@ riscv_parse_check_conflicts (riscv_parse_subset_t *rps)
 	  && strncmp (s->name, "zve", 3) == 0)
 	support_zve = true;
       if (!support_zvl
-	  && strncmp (s->name, "zvl", 3) == 0)
+	  && strncmp (s->name, "zvl", 3) == 0
+    && strncmp (s->name, "zvls", 4) != 0)
 	support_zvl = true;
       if (support_zve && support_zvl)
 	break;
@@ -2514,14 +2516,19 @@ riscv_multi_subset_supports (riscv_parse_subset_t *rps,
     case INSN_CLASS_ZKSH:
       return riscv_subset_supports (rps, "zksh");
     case INSN_CLASS_V:
-      return (riscv_subset_supports (rps, "v")
+      return ((riscv_subset_supports (rps, "v")
 	      || riscv_subset_supports (rps, "zve64x")
-	      || riscv_subset_supports (rps, "zve32x"));
+	      || riscv_subset_supports (rps, "zve32x"))
+	      && !riscv_subset_supports (rps, "zvamo"));
     case INSN_CLASS_ZVEF:
       return (riscv_subset_supports (rps, "v")
 	      || riscv_subset_supports (rps, "zve64d")
 	      || riscv_subset_supports (rps, "zve64f")
 	      || riscv_subset_supports (rps, "zve32f"));
+    case INSN_CLASS_V_OR_XTHEADV:
+    case INSN_CLASS_ZVEF_OR_XTHEADV:
+      return riscv_subset_supports (rps, "v")
+        || riscv_subset_supports(rps, "xtheadv");
     case INSN_CLASS_ZVBB:
       return riscv_subset_supports (rps, "zvbb");
     case INSN_CLASS_ZVBC:
@@ -2556,6 +2563,8 @@ riscv_multi_subset_supports (riscv_parse_subset_t *rps,
       return riscv_subset_supports (rps, "xcvmac");
     case INSN_CLASS_XCVALU:
       return riscv_subset_supports (rps, "xcvalu");
+    case INSN_CLASS_XTHEADV:
+      return riscv_subset_supports(rps, "xtheadv");
     case INSN_CLASS_XTHEADBA:
       return riscv_subset_supports (rps, "xtheadba");
     case INSN_CLASS_XTHEADBB:
@@ -2768,8 +2777,10 @@ riscv_multi_subset_supports_ext (riscv_parse_subset_t *rps,
       return "zksh";
     case INSN_CLASS_V:
       return _("v' or `zve64x' or `zve32x");
+    case INSN_CLASS_XTHEADV:
+      return _("v' or `zvlsseg' or `zvamo");
     case INSN_CLASS_ZVEF:
-      return _("v' or `zve64d' or `zve64f' or `zve32f");
+      return _("v");
     case INSN_CLASS_ZVBB:
       return _("zvbb");
     case INSN_CLASS_ZVBC:

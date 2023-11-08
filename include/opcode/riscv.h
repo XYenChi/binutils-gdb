@@ -436,7 +436,9 @@ enum riscv_insn_class
   INSN_CLASS_ZBC_OR_ZBKC,
   INSN_CLASS_ZKND_OR_ZKNE,
   INSN_CLASS_V,
+  INSN_CLASS_V_OR_XTHEADV,
   INSN_CLASS_ZVEF,
+  INSN_CLASS_ZVEF_OR_XTHEADV,
   INSN_CLASS_ZVBB,
   INSN_CLASS_ZVBC,
   INSN_CLASS_ZVKG,
@@ -467,6 +469,7 @@ enum riscv_insn_class
   INSN_CLASS_XTHEADMEMIDX,
   INSN_CLASS_XTHEADMEMPAIR,
   INSN_CLASS_XTHEADSYNC,
+  INSN_CLASS_XTHEADV,
   INSN_CLASS_XVENTANACONDOPS,
 };
 
@@ -586,6 +589,9 @@ extern const char * const riscv_vsew[8];
 extern const char * const riscv_vlmul[8];
 extern const char * const riscv_vta[2];
 extern const char * const riscv_vma[2];
+/* xtheadv.  */
+extern const char * const riscv_vlen[4];
+extern const char * const riscv_vediv[4];
 extern const char * const riscv_fli_symval[32];
 extern const float riscv_fli_numval[32];
 
