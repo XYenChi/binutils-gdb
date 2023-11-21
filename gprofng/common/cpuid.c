@@ -20,8 +20,13 @@
 
 #if defined(__i386__) || defined(__x86_64)
 #include <cpuid.h>  /* GCC-provided */
-#elif defined(__aarch64__)
+#elif defined(__aarch64__) 
 #define ATTRIBUTE_UNUSED __attribute__((unused))
+#elif defined(__riscv64__)
+#include <unistd.h> 
+
+#ifndef __NR_riscv_hwprobe
+#define RISCV_VENDOR_unknown	0
 
 static inline uint_t __attribute_const__
 __get_cpuid (unsigned int op ATTRIBUTE_UNUSED, unsigned int *eax,
@@ -105,6 +110,9 @@ my_cpuid (unsigned int op, cpuid_regs_t *regs)
 	    op, regs->eax, regs->ebx, regs->ecx, regs->edx, ret);
   return ret;
 }
+elif defined(__riscv64__)
+static int 
+my_cpuid = __SYSCALL(__NR_riscv_hwprobe, sys_riscv_hwprobe)
 #endif
 
 static cpuid_info_t *

@@ -66,6 +66,10 @@ build_src=
       build_src=true
       build_collector=true
       ;;
+    riscv64-*-linux*)
+      build_src=true
+      build_collector=true
+      ;;
   esac
   AC_ARG_ENABLE(gprofng-tools,
     AS_HELP_STRING([--disable-gprofng-tools], [do not build gprofng/src directory]),

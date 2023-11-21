@@ -2915,7 +2915,7 @@ core_pcbe_impl_name (void)
 static const char *
 core_pcbe_cpuref (void)
 {
-#if defined(__aarch64__)
+#if defined(__aarch64__) || defined(__riscv64__)
   return "";
 #elif defined(__i386__) || defined(__x86_64)
   switch (cpuid_getmodel ())
