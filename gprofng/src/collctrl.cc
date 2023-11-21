@@ -115,6 +115,9 @@ Coll_Ctrl::Coll_Ctrl (int _interactive, bool _defHWC, bool _kernelHWC)
 #elif defined(__aarch64__)
   asm volatile("mrs %0, cntfrq_el0" : "=r" (cpu_clk_freq));
 
+#elif defined(__riscv)
+	cpu_clk_freq = 1000;
+
 #else
   FILE *procf = fopen ("/proc/cpuinfo", "r");
   if (procf != NULL)
