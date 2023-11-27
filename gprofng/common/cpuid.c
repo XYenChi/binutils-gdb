@@ -22,7 +22,7 @@
 #include <cpuid.h>  /* GCC-provided */
 #elif defined(__aarch64__) 
 #define ATTRIBUTE_UNUSED __attribute__((unused))
-#elif defined(__riscv64__)
+#elif defined(__riscv)
 #include <unistd.h> 
 
 #ifndef __NR_riscv_hwprobe
@@ -110,7 +110,7 @@ my_cpuid (unsigned int op, cpuid_regs_t *regs)
 	    op, regs->eax, regs->ebx, regs->ecx, regs->edx, ret);
   return ret;
 }
-elif defined(__riscv64__)
+elif defined(__riscv)
 static int 
 my_cpuid = __SYSCALL(__NR_riscv_hwprobe, sys_riscv_hwprobe)
 #endif

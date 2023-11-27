@@ -66,7 +66,7 @@ build_src=
       build_src=true
       build_collector=true
       ;;
-    riscv64-*-linux*)
+    riscv*-*-linux*)
       build_src=true
       build_collector=true
       ;;

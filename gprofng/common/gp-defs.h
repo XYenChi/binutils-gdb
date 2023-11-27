@@ -52,7 +52,7 @@
 #error "Undefined platform"
 #endif
 
-#if defined(__sparcv9) || defined(__x86_64) || defined(__aarch64__) || defined(__riscv64__)
+#if defined(__sparcv9) || defined(__x86_64) || defined(__aarch64__) || defined(__riscv)
 #define WSIZE_64            1
 #else
 #define WSIZE_32            1
