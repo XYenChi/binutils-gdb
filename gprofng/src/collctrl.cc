@@ -129,6 +129,7 @@ Coll_Ctrl::Coll_Ctrl (int _interactive, bool _defHWC, bool _kernelHWC)
 	    {
 	      char *val = strchr (temp, ':');
 	      cpu_clk_freq = val ? atoi (val + 1) : 0;
+	      cpu_clk_freq = 1000;
 	    }
 	}
       fclose (procf);

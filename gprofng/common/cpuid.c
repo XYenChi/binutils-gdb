@@ -42,6 +42,8 @@ __get_cpuid (unsigned int op ATTRIBUTE_UNUSED, unsigned int *eax,
   Tprintf (DBG_LT0, "cpuid.c:%d read_cpuid_id() MIDR_EL1=0x%016x\n", __LINE__, *eax);
   return res;
 }
+elif defined(__riscv)
+#include <unistd.h>
 #endif
 
 /*
@@ -104,7 +106,7 @@ my_cpuid (unsigned int op, cpuid_regs_t *regs)
   TprintfT (DBG_LT1, "my_cpuid: __get_cpuid(0x%x, 0x%x, 0x%x, 0x%x, 0x%x) returns %d\n",
 	    op, regs->eax, regs->ebx, regs->ecx, regs->edx, ret);
   return ret;
-}
+} 
 #endif
 
 static cpuid_info_t *
@@ -180,6 +182,9 @@ get_cpuid_info ()
 	cpi->cpi_model += CPI_MODEL_XTD (regs.eax) << 4;
       break;
     }
+#elif define(__riscv)
+	cpi->cpi_vendor = 0;
+	
 #endif
   return cpi;
 }
