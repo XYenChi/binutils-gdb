@@ -182,7 +182,7 @@ get_cpuid_info ()
 	cpi->cpi_model += CPI_MODEL_XTD (regs.eax) << 4;
       break;
     }
-#elif define(__riscv)
+#elif defined(__riscv)
 	cpi->cpi_vendor = 0;
 	
 #endif
