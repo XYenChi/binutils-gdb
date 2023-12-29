@@ -117,7 +117,8 @@ Coll_Ctrl::Coll_Ctrl (int _interactive, bool _defHWC, bool _kernelHWC)
 
 #elif defined(__riscv)
 	cpu_clk_freq = 1000;
-
+	ncpus = 4;
+	
 #else
   FILE *procf = fopen ("/proc/cpuinfo", "r");
   if (procf != NULL)
