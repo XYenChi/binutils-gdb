@@ -81,8 +81,8 @@ Coll_Ctrl::Coll_Ctrl (int _interactive, bool _defHWC, bool _kernelHWC)
       /* add 2048 to count, since on some systems CPUID does not start at zero */
       ncpumax = ncpus + 2048;
     }
-  ncpus = 0;
-  cpu_clk_freq = 0;
+  //ncpus = 0;
+  //cpu_clk_freq = 0;
 
   // On Linux, read /proc/cpuinfo to get CPU count and clock rate
   // Note that parsing is different on SPARC and x86
