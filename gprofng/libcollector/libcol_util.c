@@ -93,7 +93,10 @@ __collector_gettid ()
 		       : "=a" (r) : "0" (__NR_gettid)
 		       : syscall_clobber);
 #elif ARCH(RISCV)
-  r = syscall (__NR_riscv_hwprobe);    /* RISC-V hart id */
+  __asm__ __volatile__("csrr %0, mhartid"    /* RISC-V hart id */
+  			: "=a" (r)
+			: /* input : none */
+			: /* clobbers: none */);    
 #else
   r = syscall (__NR_gettid);
 #endif
