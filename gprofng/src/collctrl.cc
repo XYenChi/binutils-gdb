@@ -51,7 +51,7 @@ extern const char *strsignal (int);
 #endif
 
 // _SC_CPUID_MAX is not available on 2.6/2.7
-// #ifndef _SC_CPUID_MAX
+
 // #define _SC_CPUID_MAX       517
 // #endif
 
@@ -74,13 +74,14 @@ Coll_Ctrl::Coll_Ctrl (int _interactive, bool _defHWC, bool _kernelHWC)
   default_stem = strdup ("test");
 
   /* get CPU count and processor clock rate */
+  #ifndef _SC_CPUID_MAX
+  ncpus = sysconf (_SC_NPROCESSORS_CONF);
+  /* add 2048 to count, since on some systems CPUID does not start at zero */
+  ncpumax = ncpus + 2048;
+  #elif
   ncpumax = sysconf (_SC_CPUID_MAX);
-  if (ncpumax == -1)
-    {
-      ncpus = sysconf (_SC_NPROCESSORS_CONF);
-      /* add 2048 to count, since on some systems CPUID does not start at zero */
-      ncpumax = ncpus + 2048;
-    }
+  #endif
+  
   //ncpus = 0;
   //cpu_clk_freq = 0;
 
