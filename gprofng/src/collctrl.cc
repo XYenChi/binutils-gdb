@@ -51,9 +51,9 @@ extern const char *strsignal (int);
 #endif
 
 // _SC_CPUID_MAX is not available on 2.6/2.7
-#ifndef _SC_CPUID_MAX
-#define _SC_CPUID_MAX       517
-#endif
+// #ifndef _SC_CPUID_MAX
+// #define _SC_CPUID_MAX       517
+// #endif
 
 const char *get_fstype (char *);
 
@@ -117,8 +117,7 @@ Coll_Ctrl::Coll_Ctrl (int _interactive, bool _defHWC, bool _kernelHWC)
 
 #elif defined(__riscv)
 	cpu_clk_freq = 1000;
-	ncpus = 4;
-	
+
 #else
   FILE *procf = fopen ("/proc/cpuinfo", "r");
   if (procf != NULL)
