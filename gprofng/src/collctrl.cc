@@ -81,7 +81,7 @@ Coll_Ctrl::Coll_Ctrl (int _interactive, bool _defHWC, bool _kernelHWC)
   #elif
   ncpumax = sysconf (_SC_CPUID_MAX);
   #endif
-  
+
   //ncpus = 0;
   //cpu_clk_freq = 0;
 
