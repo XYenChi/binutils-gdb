@@ -188,9 +188,9 @@ memory_error_func (int status ATTRIBUTE_UNUSED, bfd_vma addr ATTRIBUTE_UNUSED,
 #define GET_FP(ctx) (((ucontext_t*)ctx)->uc_mcontext.regs[14])
 
 #elif ARCH(RISCV)
-#define GET_PC(ctx) (((ucontext_t*)ctx)->uc_mcontext.__gregs[REG_PC])
-#define GET_SP(ctx) (((ucontext_t*)ctx)->uc_mcontext.__gregs[REG_SP])
-#define GET_FP(ctx) (((ucontext_t*)ctx)->uc_mcontext.__gregs[REG_S0])
+#define GET_PC(ctx) (((ucontext_t*)ctx)->uc_mcontext.__gregs[0])
+#define GET_SP(ctx) (((ucontext_t*)ctx)->uc_mcontext.__gregs[2])
+#define GET_FP(ctx) (((ucontext_t*)ctx)->uc_mcontext.__gregs[8])
 
 #endif /* ARCH() */
 
