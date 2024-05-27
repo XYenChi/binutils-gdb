@@ -4578,7 +4578,7 @@ exit:
   return ind * sizeof (long);
 }
 
-#elif ARCH(Aarch64) || ARCH(RISCV)
+#elif ARCH(Aarch64)
 
 static int
 stack_unwind (char *buf, int size, void *bptr, void *eptr, ucontext_t *context, int mode)
