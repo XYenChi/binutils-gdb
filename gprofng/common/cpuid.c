@@ -42,8 +42,6 @@ __get_cpuid (unsigned int op ATTRIBUTE_UNUSED, unsigned int *eax,
   Tprintf (DBG_LT0, "cpuid.c:%d read_cpuid_id() MIDR_EL1=0x%016x\n", __LINE__, *eax);
   return res;
 }
-#elif defined(__riscv)
-#include <unistd.h>
 #endif
 
 /*
