@@ -235,14 +235,6 @@ memory_error_func (int status ATTRIBUTE_UNUSED, bfd_vma addr ATTRIBUTE_UNUSED,
     { CALL_UTIL (getcontext) (context);  \
       context->uc_mcontext.sp = (__u64) __builtin_frame_address(0); \
     }
-
-#elif ARCH(RISCV)
-#define FILL_CONTEXT(context) \
-    { \
-        CALL_UTIL(getcontext)(context); \
-        context->uc_mcontext.__gregs[2] = (__u64)__builtin_frame_address(0); \
-	}
-
 #endif/* ARCH() */
 
 static int
@@ -4578,7 +4570,7 @@ exit:
   return ind * sizeof (long);
 }
 
-#elif ARCH(Aarch64) || ARCH(RISCV)
+#elif ARCH(Aarch64) 
 
 static int
 stack_unwind (char *buf, int size, void *bptr, void *eptr, ucontext_t *context, int mode)
