@@ -53,6 +53,7 @@ static int start_data_collection (void);
 static int stop_data_collection (void);
 static int close_experiment (void);
 static int detach_experiment (void);
+static int SETFUNCTIONCONTEXT(void);
 
 static ModuleInterface module_interface ={
   SP_PROFILE_FILE,          /* description */
