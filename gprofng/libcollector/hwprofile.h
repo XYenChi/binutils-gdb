@@ -85,7 +85,7 @@ typedef struct MHwcntr_packet
     (ucp)->uc_mcontext.regs[CONTEXT_SP] = 0; \
     (ucp)->uc_mcontext.regs[CONTEXT_FP] = 0;
 
-#elif ARCH(riscv)
+#elif ARCH(RISCV)
 #define CONTEXT_PC REG_PC
 #define CONTEXT_FP 8
 #define CONTEXT_SP 2
