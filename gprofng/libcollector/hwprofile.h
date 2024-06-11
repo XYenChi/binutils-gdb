@@ -85,14 +85,14 @@ typedef struct MHwcntr_packet
     (ucp)->uc_mcontext.regs[CONTEXT_SP] = 0; \
     (ucp)->uc_mcontext.regs[CONTEXT_FP] = 0;
 
-#elif ARCH(RISCV)
+#elif ARCH(riscv)
 #define CONTEXT_PC REG_PC
-#define CONTEXT_S0 REG_S0
-#define CONTEXT_SP REG_SP
+#define CONTEXT_FP 8
+#define CONTEXT_SP 2
 #define SETFUNCTIONCONTEXT(ucp,funcp) \
     (ucp)->uc_mcontext.__gregs[CONTEXT_PC] = (greg_t)(funcp); \
-    (ucp)->uc_mcontext.__gregs[CONTEXT_SP] = 0; \
-    (ucp)->uc_mcontext.__gregs[CONTEXT_S0] = 0;
+    (ucp)->uc_mcontext.__gregs[CONTEXT_FP] = 0; \
+    (ucp)->uc_mcontext.__gregs[CONTEXT_SP] = 0;
      
 #endif /* ARCH() */
 
