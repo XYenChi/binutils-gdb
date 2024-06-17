@@ -111,7 +111,15 @@ enum {
     ARM_CPU_IMP_QCOM    = 0x51
 };
 
+// rscv Constants from arch/riscv/include/asm/vendorid_list.h
+enum {
+	ANDES_VENDOR_ID		=0x31e,
+	SIFIVE_VENDOR_ID	=0x489,
+	THEAD_VENDOR_ID		=0x5b7
+}
+
 #define	AARCH64_VENDORSTR_ARM	"ARM"
+#define RISCV_VENDORSTR "RISCV"
 
   /* strings below must match those returned by cpc_getcpuver() */
   typedef struct
@@ -191,6 +199,7 @@ enum {
   {CPC_ULTRA2                , "UltraSPARC I&II"}, \
   {CPC_ULTRA1                , "UltraSPARC I&II"}, \
   {ARM_CPU_IMP_APM           , AARCH64_VENDORSTR_ARM}, \
+  {RISCV_CPU_IMP			 , RISCV_VENDORSTR}, \
   {0, NULL}
   /* init like this:
      static libcpc2_cpu_lookup_t cpu_table[]={LIBCPC2_CPU_LOOKUP_LIST};
