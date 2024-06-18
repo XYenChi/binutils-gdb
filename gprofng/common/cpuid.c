@@ -188,7 +188,7 @@ get_cpuid_info ()
 #elif defined(__riscv)
 {
   #ifndef __riscv_hwprobe
-	  cpi->cpi_vendor = 0;
+	  cpi->cpi_vendor = 'unknown';
   #else
 	  {struct riscv_hwprobe res;
 	  res.key = RISCV_HWPROBE_KEY_MVENDORID;
