@@ -2754,6 +2754,9 @@ core_pcbe_init (void)
       return 0;
     case X86_VENDOR_Intel:
       break;
+    case ANDES_VENDOR_ID:
+    case SIFIVE_VENDOR_ID:
+    case THEAD_VENDOR_ID:
     default:
       return -1;
     }

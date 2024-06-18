@@ -43,7 +43,6 @@ __get_cpuid (unsigned int op ATTRIBUTE_UNUSED, unsigned int *eax,
   return res;
 }
 #elif defined(__riscv)
-#define _GNU_SOURCE
 #include <sched.h>
 #include <sys/syscall.h>
 #include <unistd.h>
