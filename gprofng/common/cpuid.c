@@ -188,11 +188,14 @@ get_cpuid_info ()
 #elif defined(__riscv)
 {
   #ifndef __riscv_hwprobe
-	  cpi->cpi_vendor = 'unknown';
+	  cpi->cpi_vendor = 0;
+	  cpi->cpi_family = 0;
+	  cpi->cpi_model = 0;
   #else
-	  {struct riscv_hwprobe res;
-	  res.key = RISCV_HWPROBE_KEY_MVENDORID;
-	  cpu_set_t cpu_set;
+	  {
+		struct riscv_hwprobe res;
+	  	res.key = RISCV_HWPROBE_KEY_MVENDORID;
+	  	cpu_set_t cpu_set;
 	        int __riscv_hwprobe (struct riscv_hwprobe *pairs, 			\
 					long pair_count, long cpu_count, 		\
 					unsigned long *cpus, unsigned long flags)	\
@@ -203,10 +206,12 @@ get_cpuid_info ()
           CPU_SET(0, &cpu_set);
           long ret = __riscv_hwprobe(&res, 1, 1, &cpu_set, 0);
 	  cpi->cpi_vendor = res.value;
-    return cpi;
+	  cpi->cpi_family = 0;
+	  cpi->cpi_model = 0;
     }
   }
 #endif
+    return cpi;
 }
 
 static inline uint_t
