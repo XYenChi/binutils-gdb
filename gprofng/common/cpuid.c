@@ -186,13 +186,11 @@ get_cpuid_info ()
       break;
     }
 #elif defined(__riscv)
-{
   #ifndef __riscv_hwprobe
 	  cpi->cpi_vendor = 0;
 	  cpi->cpi_family = 0;
 	  cpi->cpi_model = 0;
   #else
-	  {
 		struct riscv_hwprobe res;
 	  	res.key = RISCV_HWPROBE_KEY_MVENDORID;
 	  	cpu_set_t cpu_set;
@@ -208,8 +206,7 @@ get_cpuid_info ()
 	  cpi->cpi_vendor = res.value;
 	  cpi->cpi_family = 0;
 	  cpi->cpi_model = 0;
-    }
-  }
+	#endif
 #endif
     return cpi;
 }
