@@ -209,10 +209,10 @@ static __attribute__ ((always_inline)) inline uint32_t
 __collector_cas_32 (volatile uint32_t *pdata, uint32_t old, uint32_t new)
 {
   uint32_t r;
-  __asm__ __volatile__("lock; cmpxchgl %2, %1"
-		       : "=a" (r), "=m" (*pdata) : "r" (new),
-		       "a" (old), "m" (*pdata));
-  return r;
+	__asm__ __volatile__("lock; cmpxchgl %2, %1"
+			: "=a" (r), "=m" (*pdata) : "r" (new),
+			"a" (old), "m" (*pdata));
+	return r;
 }
 /**
  * This function enables a compare and swap operation to occur atomically.
@@ -270,7 +270,7 @@ __collector_cas_ptr (void *mem, void *cmp, void *new)
   return r;
 }
 
-#elif ARCH(Aarch64)
+#elif ARCH(Aarch64) || ARCH(RISCV)
 static __attribute__ ((always_inline)) inline uint32_t
 __collector_inc_32 (volatile uint32_t *ptr)
 {

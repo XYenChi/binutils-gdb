@@ -91,7 +91,7 @@ __collector_gettid ()
 #endif
   __asm__ __volatile__(syscall_instr
 		       : "=a" (r) : "0" (__NR_gettid)
-		       : syscall_clobber);
+		       : syscall_clobber);   
 #else
   r = syscall (__NR_gettid);
 #endif
@@ -1459,7 +1459,10 @@ __collector_util_init ()
   else if ((ptr = dlvsym (libc, "fopen", "GLIBC_2.0")) != NULL)
     __collector_util_funcs.fopen = ptr;
   else
+  {
     ptr = dlsym (libc, "fopen");
+    if(ptr) __collector_util_funcs.fopen = ptr;
+  }
   if (__collector_util_funcs.fopen == NULL)
     {
       CALL_UTIL (fprintf)(stderr, "COL_ERROR_UTIL_INIT fopen: %s\n", dlerror ());
@@ -1475,7 +1478,10 @@ __collector_util_init ()
   else if ((ptr = dlvsym (libc, "popen", "GLIBC_2.0")) != NULL)
     __collector_util_funcs.popen = ptr;
   else
+  {
     ptr = dlsym (libc, "popen");
+    if(ptr) __collector_util_funcs.popen = ptr;
+  }
   if (__collector_util_funcs.popen == NULL)
     {
       CALL_UTIL (fprintf)(stderr, "COL_ERROR_UTIL_INIT popen: %s\n", dlerror ());
@@ -1491,7 +1497,10 @@ __collector_util_init ()
   else if ((ptr = dlvsym (libc, "fclose", "GLIBC_2.0")) != NULL)
     __collector_util_funcs.fclose = ptr;
   else
+  {
     ptr = dlsym (libc, "fclose");
+    if(ptr) __collector_util_funcs.fclose = ptr;
+  }
   if (__collector_util_funcs.fclose == NULL)
     {
       CALL_UTIL (fprintf)(stderr, "COL_ERROR_UTIL_INIT fclose: %s\n", dlerror ());

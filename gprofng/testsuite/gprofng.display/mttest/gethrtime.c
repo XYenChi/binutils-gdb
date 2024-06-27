@@ -32,6 +32,8 @@
 #define SPARC       1
 #elif defined(__aarch64__)
 #define Aarch64     1
+#elif defined(__riscv)
+#define RISCV       1
 #else
 #define Intel       1
 #endif

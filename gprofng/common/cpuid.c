@@ -42,6 +42,11 @@ __get_cpuid (unsigned int op ATTRIBUTE_UNUSED, unsigned int *eax,
   Tprintf (DBG_LT0, "cpuid.c:%d read_cpuid_id() MIDR_EL1=0x%016x\n", __LINE__, *eax);
   return res;
 }
+#elif defined(__riscv)
+#include <sched.h>
+#include <sys/syscall.h>
+#include <unistd.h>
+#include <asm/hwprobe.h>
 #endif
 
 /*
@@ -104,7 +109,7 @@ my_cpuid (unsigned int op, cpuid_regs_t *regs)
   TprintfT (DBG_LT1, "my_cpuid: __get_cpuid(0x%x, 0x%x, 0x%x, 0x%x, 0x%x) returns %d\n",
 	    op, regs->eax, regs->ebx, regs->ecx, regs->edx, ret);
   return ret;
-}
+} 
 #endif
 
 static cpuid_info_t *
@@ -180,8 +185,30 @@ get_cpuid_info ()
 	cpi->cpi_model += CPI_MODEL_XTD (regs.eax) << 4;
       break;
     }
+#elif defined(__riscv)
+  #ifndef __riscv_hwprobe
+	  cpi->cpi_vendor = 0;
+	  cpi->cpi_family = 0;
+	  cpi->cpi_model = 0;
+  #else
+		struct riscv_hwprobe res;
+	  	res.key = RISCV_HWPROBE_KEY_MVENDORID;
+	  	cpu_set_t cpu_set;
+	        int __riscv_hwprobe (struct riscv_hwprobe *pairs, 			\
+					long pair_count, long cpu_count, 		\
+					unsigned long *cpus, unsigned long flags)	\
+          {
+                return syscall(__NR_riscv_hwprobe, pairs, pair_count, cpu_count, cpus, flags);
+          }
+          CPU_ZERO(&cpu_set);
+          CPU_SET(0, &cpu_set);
+          long ret = __riscv_hwprobe(&res, 1, 1, &cpu_set, 0);
+	  cpi->cpi_vendor = res.value;
+	  cpi->cpi_family = 0;
+	  cpi->cpi_model = 0;
+	#endif
 #endif
-  return cpi;
+    return cpi;
 }
 
 static inline uint_t

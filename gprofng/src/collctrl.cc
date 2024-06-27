@@ -51,9 +51,9 @@ extern const char *strsignal (int);
 #endif
 
 // _SC_CPUID_MAX is not available on 2.6/2.7
-#ifndef _SC_CPUID_MAX
-#define _SC_CPUID_MAX       517
-#endif
+
+// #define _SC_CPUID_MAX       517
+// #endif
 
 const char *get_fstype (char *);
 
@@ -74,15 +74,16 @@ Coll_Ctrl::Coll_Ctrl (int _interactive, bool _defHWC, bool _kernelHWC)
   default_stem = strdup ("test");
 
   /* get CPU count and processor clock rate */
+  #ifndef _SC_CPUID_MAX
+  ncpus = sysconf (_SC_NPROCESSORS_CONF);
+  /* add 2048 to count, since on some systems CPUID does not start at zero */
+  ncpumax = ncpus + 2048;
+  #elif
   ncpumax = sysconf (_SC_CPUID_MAX);
-  if (ncpumax == -1)
-    {
-      ncpus = sysconf (_SC_NPROCESSORS_CONF);
-      /* add 2048 to count, since on some systems CPUID does not start at zero */
-      ncpumax = ncpus + 2048;
-    }
-  ncpus = 0;
-  cpu_clk_freq = 0;
+  #endif
+
+  //ncpus = 0;
+  //cpu_clk_freq = 0;
 
   // On Linux, read /proc/cpuinfo to get CPU count and clock rate
   // Note that parsing is different on SPARC and x86
@@ -114,6 +115,9 @@ Coll_Ctrl::Coll_Ctrl (int _interactive, bool _defHWC, bool _kernelHWC)
 
 #elif defined(__aarch64__)
   asm volatile("mrs %0, cntfrq_el0" : "=r" (cpu_clk_freq));
+
+#elif defined(__riscv)
+	cpu_clk_freq = 1000;
 
 #else
   FILE *procf = fopen ("/proc/cpuinfo", "r");
